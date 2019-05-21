@@ -78,6 +78,7 @@ class _PullDragWidgetState extends State<PullDragWidget>
         instance.onTap = _onContentTap;
       })
     };
+    //添加订阅
     bus.on("openCard", openCard);
     super.initState();
   }
@@ -100,10 +101,12 @@ class _PullDragWidgetState extends State<PullDragWidget>
   void dispose() {
     super.dispose();
     _animationController?.dispose();
+    //移除订阅
     bus.off("openCard", openCard);
   }
 
   Widget _headerWidget() {
+    //y轴移动
     return Transform.translate(
       offset: Offset(0, _offsetY * widget.parallaxRatio),
       child: widget.header,
@@ -179,8 +182,10 @@ class _PullDragWidgetState extends State<PullDragWidget>
 
   @override
   Widget build(BuildContext context) {
+    //手势
     return RawGestureDetector(
         behavior: HitTestBehavior.translucent,
+        //手势字典
         gestures: _contentGestures,
         child: Stack(
           children: <Widget>[
@@ -189,6 +194,7 @@ class _PullDragWidgetState extends State<PullDragWidget>
                 bottom: -_offsetY,
                 left: 0,
                 right: 0,
+                //??
                 child: IgnorePointer(
                   ignoring: _opened,
                   child: widget.child,

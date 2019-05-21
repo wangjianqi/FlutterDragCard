@@ -42,6 +42,7 @@ class _CardStackWidgetState extends State<CardStackWidget>
   void initState() {
     _totalDx = _totalDy = 0;
     _cardGestures = {
+      //方向手势
       DirectionGestureRecognizer:
           GestureRecognizerFactoryWithHandlers<DirectionGestureRecognizer>(
               () => DirectionGestureRecognizer(DirectionGestureRecognizer.left |
@@ -51,6 +52,7 @@ class _CardStackWidgetState extends State<CardStackWidget>
         instance.onUpdate = _onPanUpdate;
         instance.onEnd = _onPanEnd;
       }),
+      //点击手势
       TapGestureRecognizer:
           GestureRecognizerFactoryWithHandlers<TapGestureRecognizer>(
               () => TapGestureRecognizer(), (instance) {
@@ -82,6 +84,7 @@ class _CardStackWidgetState extends State<CardStackWidget>
     }
     _totalDx += details.delta.dx;
     _totalDy += details.delta.dy;
+    //计算
     _ratio =
         sqrt(_totalDx * _totalDx + _totalDy * _totalDy) / context.size.width;
     _ratio = min(max(_ratio, 0), 1.0);
@@ -176,6 +179,7 @@ class _CardStackWidgetState extends State<CardStackWidget>
       if (i == 0) {
         cardWidget = RawGestureDetector(
           gestures: _cardGestures,
+          //手势行为
           behavior: HitTestBehavior.deferToChild,
           child: cardWidget,
         );
@@ -210,6 +214,7 @@ class _CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //比例
     return AspectRatio(
       aspectRatio: 0.75,
       child: Transform(
@@ -218,15 +223,19 @@ class _CardWidget extends StatelessWidget {
               dy + (-offset * position.toDouble()),
               0),
           child: ClipRRect(
+            //圆角
             borderRadius: BorderRadius.circular(10),
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
+                //底部图片
                 Image.network(
                   cardEntity.picUrl,
                   fit: BoxFit.cover,
                 ),
+                //设置颜色的
                 Container(color: const Color(0x5a000000)),
+                //文字
                 Container(
                   margin: EdgeInsets.all(20),
                   alignment: Alignment.center,

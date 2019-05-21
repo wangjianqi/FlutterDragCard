@@ -40,6 +40,7 @@ class _HomePagerState extends State<HomePager> {
     _loadJson();
   }
 
+  //加载本地json
   Future<String> _loadAsset() async {
     return await rootBundle.loadString('assets/mock/jk_daily_cards.json');
   }
@@ -95,8 +96,9 @@ class _HomePagerState extends State<HomePager> {
 
   @override
   Widget build(BuildContext context) {
+    //底部widget
     return Container(
-        color: Colors.white,
+        color: Colors.greenAccent,
         child: PullDragWidget(
           dragHeight: 100,
           parallaxRatio: 0.4,
@@ -111,6 +113,7 @@ class _HomePagerState extends State<HomePager> {
   }
 
   Widget _createHeader() {
+
     Widget header;
     if (_toolbarList == null || _toolbarList.length == 0) {
       header = Text("Loading...");
@@ -128,6 +131,7 @@ class _HomePagerState extends State<HomePager> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        //圆角
                         ClipOval(
                           child: FadeInImage.memoryNetwork(
                               image: item.picUrl,
@@ -172,6 +176,7 @@ class _HomePagerState extends State<HomePager> {
               child: Container(
                 height: 100,
                 padding: EdgeInsets.only(left: 20, right: 20),
+                //底部按钮
                 child: _createOptMenus(),
               )),
           CardStackWidget(
@@ -191,6 +196,7 @@ class _HomePagerState extends State<HomePager> {
         _createMenu("assets/drawable/ic_discover_next_card_back.png",
             () => Fluttertoast.showToast(msg: "coming soon...😂😂")),
         _createMenu("assets/drawable/ic_discover_more.png",
+            //发送事件
             () => bus.emit("openCard", true)),
         _createMenu("assets/drawable/ic_discover_next_card_right.png",
             _showAboutDialog),
@@ -232,6 +238,7 @@ class _HomePagerState extends State<HomePager> {
         child: Container(
             alignment: Alignment.center,
             child: GestureDetector(
+              //点击手势响应
                 onTap: onTap,
                 child: Image.asset(
                   picUrl,
